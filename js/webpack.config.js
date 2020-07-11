@@ -1,6 +1,7 @@
 const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
+    mode: "production",
     entry: "./src/main.ts",
     output: {
         filename: "./gotty-bundle.js"
