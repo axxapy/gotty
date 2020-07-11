@@ -1,13 +1,16 @@
 {
     "devDependencies": {
-        "license-loader": "^0.5.0",
-        "ts-loader": "^2.0.3",
-        "typescript": "^2.3.2",
-        "uglifyjs-webpack-plugin": "^1.0.0-beta.2",
-        "webpack": "^2.5.1"
+        "license-loader": "^0.7.0",
+        "terser-webpack-plugin": "^3.0.6",
+        "ts-loader": "^8.0.0",
+        "typescript": "^3.9.6",
+        "webpack": "^4.43.0",
+        "webpack-cli": "^3.3.12"
     },
     "dependencies": {
         "libapps": "github:yudai/libapps#release-hterm-1.70",
-        "xterm": "^2.7.0"
-    }
+        "xterm": "^4.8.1",
+        "xterm-addon-fit": "^0.4.0"
+    },
+    "license": "MIT"
 }

@@ -1,37 +1,29 @@
-# ![](https://raw.githubusercontent.com/yudai/gotty/master/resources/favicon.png) GoTTY - Share your terminal as a web application
+# ![](https://raw.githubusercontent.com/axxapy/gotty/master/resources/favicon.png) GoTTY - Share your terminal as a web application
 
-[![GitHub release](http://img.shields.io/github/release/yudai/gotty.svg?style=flat-square)][release]
+[![GitHub release](http://img.shields.io/github/release/axxapy/gotty.svg?style=flat-square)][release]
 [![Wercker](http://img.shields.io/wercker/ci/55d0eeff7331453f0801982c.svg?style=flat-square)][wercker]
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)][license]
 
-[release]: https://github.com/yudai/gotty/releases
+[release]: https://github.com/axxapy/gotty/releases
 [wercker]: https://app.wercker.com/project/bykey/03b91f441bebeda34f80e09a9f14126f
-[license]: https://github.com/yudai/gotty/blob/master/LICENSE
+[license]: https://github.com/axxapy/gotty/blob/master/LICENSE
 
 GoTTY is a simple command line tool that turns your CLI tools into web applications.
 
-![Screenshot](https://raw.githubusercontent.com/yudai/gotty/master/screenshot.gif)
+![Screenshot](https://raw.githubusercontent.com/axxapy/gotty/master/screenshot.gif)
 
 # Installation
 
-Download the latest stable binary file from the [Releases](https://github.com/yudai/gotty/releases) page. Note that the release marked `Pre-release` is built for testing purpose, which can include unstable or breaking changes. Download a release marked [Latest release](https://github.com/yudai/gotty/releases/latest) for a stabale build.
+Download the latest stable binary file from the [Releases](https://github.com/axxapy/gotty/releases) page. Note that the release marked `Pre-release` is built for testing purpose, which can include unstable or breaking changes. Download a release marked [Latest release](https://github.com/yudai/gotty/releases/latest) for a stabale build.
 
 (Files named with `darwin_amd64` are for Mac OS X users)
-
-## Homebrew Installation
-
-You can install GoTTY with [Homebrew](http://brew.sh/) as well.
-
-```sh
-$ brew install yudai/gotty/gotty
-```
 
 ## `go get` Installation (Development)
 
 If you have a Go language environment, you can install GoTTY with the `go get` command. However, this command builds a binary file from the latest master branch, which can include unstable or breaking changes. GoTTY requires go1.9 or later.
 
 ```sh
-$ go get github.com/yudai/gotty
+$ go get github.com/axxapy/gotty
 ```
 
 # Usage
@@ -69,6 +61,8 @@ By default, GoTTY starts a web server at port 8080. Open the URL on your web bro
 --height value                Static height of the screen, 0(default) means dynamically resize (default: 0) [$GOTTY_HEIGHT]
 --ws-origin value             A regular expression that matches origin URLs to be accepted by WebSocket. No cross origin requests are acceptable by default [$GOTTY_WS_ORIGIN]
 --term value                  Terminal name to use on the browser, one of xterm or hterm. (default: "xterm") [$GOTTY_TERM]
+--enable-cookies-export       Enable cookies export to env as GOTTY_COOKIE_%NAME% [$GOTTY_ENABLE_COOKIES_EXPORT]
+--enable-headers-export       Enable headers export to env as GOTTY_HEADER_%NAME% [$GOTTY_ENABLE_HEADERS_EXPORT]
 --close-signal value          Signal sent to the command process when gotty close it (default: SIGHUP) (default: 1) [$GOTTY_CLOSE_SIGNAL]
 --close-timeout value         Time in seconds to force kill process after client is disconnected (default: -1) (default: -1) [$GOTTY_CLOSE_TIMEOUT]
 --config value                Config file path (default: "~/.gotty") [$GOTTY_CONFIG]
@@ -94,7 +88,7 @@ preferences {
 }
 ```
 
-See the [`.gotty`](https://github.com/yudai/gotty/blob/master/.gotty) file in this repository for the list of configuration options.
+See the [`.gotty`](https://github.com/axxapy/gotty/blob/master/.gotty) file in this repository for the list of configuration options.
 
 ### Security Options
 
@@ -156,7 +150,6 @@ You can build a binary using the following commands. Windows is not supported no
 ```sh
 # Install tools
 go get github.com/jteeuwen/go-bindata/...
-go get github.com/tools/godep
 
 # Build
 make
