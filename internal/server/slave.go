@@ -1,7 +1,7 @@
 package server
 
 import (
-	"github.com/axxapy/gotty/webtty"
+	"github.com/axxapy/gotty/internal/webtty"
 )
 
 // Slave is webtty.Slave with some additional methods.

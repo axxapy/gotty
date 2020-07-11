@@ -4,7 +4,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/axxapy/gotty/server"
+	"github.com/axxapy/gotty/internal/server"
 )
 
 type Options struct {

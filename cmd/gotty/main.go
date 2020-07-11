@@ -11,10 +11,10 @@ import (
 
 	"github.com/codegangsta/cli"
 
-	"github.com/axxapy/gotty/backend/localcommand"
-	"github.com/axxapy/gotty/pkg/homedir"
-	"github.com/axxapy/gotty/server"
-	"github.com/axxapy/gotty/utils"
+	"github.com/axxapy/gotty/internal/backend/localcommand"
+	"github.com/axxapy/gotty/internal/homedir"
+	"github.com/axxapy/gotty/internal/server"
+	"github.com/axxapy/gotty/internal/utils"
 )
 
 func main() {
