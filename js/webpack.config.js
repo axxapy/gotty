@@ -1,9 +1,9 @@
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
     entry: "./src/main.ts",
     output: {
-        filename: "./dist/gotty-bundle.js"
+        filename: "./gotty-bundle.js"
     },
     devtool: "source-map",
     resolve: {
@@ -23,7 +23,12 @@ module.exports = {
             }
         ]
     },
-    plugins: [
-        new UglifyJSPlugin()
-    ]
+    optimization: {
+        minimize: true,
+        minimizer: [new TerserPlugin()],
+    },
+    performance: {
+        maxEntrypointSize: 4096000,
+        maxAssetSize: 4096000
+    }
 };
