@@ -5,7 +5,7 @@ GIT_COMMIT = `git rev-parse --short HEAD`
 VERSION = 1.1.0
 BUILD_OPTIONS = -ldflags "-X main.Version=$(VERSION) -X main.CommitID=$(GIT_COMMIT)"
 BINARY = gotty
-#GOARM=5
+GOENV = GOARM=5 CGO_ENABLED=0
 
 PLATFORMS=darwin linux freebsd netbsd openbsd
 ARCHITECTURES=386 amd64 arm
@@ -37,7 +37,7 @@ assets: tools ## Build static assets
 build: ## Build binary (assets must be built separately)
 	mkdir -p $(BUILD_DIR)
 	$(foreach GOOS, $(PLATFORMS),\
-	$(foreach GOARCH, $(ARCHITECTURES), $(shell export GOOS=$(GOOS); export GOARCH=$(GOARCH); go build $(BUILD_OPTIONS) -o $(BUILD_DIR)/$(BINARY) cmd/gotty/*.go && gzip $(BUILD_DIR)/$(BINARY) && mv $(BUILD_DIR)/$(BINARY).gz $(BUILD_DIR)/$(BINARY)-$(GOOS)-$(GOARCH).gz)))
+	$(foreach GOARCH, $(ARCHITECTURES), $(shell export GOOS=$(GOOS); export GOARCH=$(GOARCH); $(GOENV) go build $(BUILD_OPTIONS) -o $(BUILD_DIR)/$(BINARY) cmd/gotty/*.go && gzip $(BUILD_DIR)/$(BINARY) && mv $(BUILD_DIR)/$(BINARY).gz $(BUILD_DIR)/$(BINARY)-$(GOOS)-$(GOARCH).gz)))
 	cd ${OUTPUT_DIR}/dist; sha256sum * > ./SHA256SUMS
 
 fmt: ## Run go fmt
