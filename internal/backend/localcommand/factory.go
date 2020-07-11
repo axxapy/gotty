@@ -37,12 +37,16 @@ func (factory *Factory) Name() string {
 	return "local command"
 }
 
-func (factory *Factory) New(params map[string][]string) (server.Slave, error) {
+func (factory *Factory) New(params map[string][]string, env map[string]string) (server.Slave, error) {
 	argv := make([]string, len(factory.argv))
 	copy(argv, factory.argv)
 	if params["arg"] != nil && len(params["arg"]) > 0 {
 		argv = append(argv, params["arg"]...)
 	}
+	options := factory.opts
+	if env != nil && len(env) > 0 {
+		options = append(options, WithEnv(env))
+	}
 
-	return New(factory.command, argv, factory.opts...)
+	return New(factory.command, argv, options...)
 }

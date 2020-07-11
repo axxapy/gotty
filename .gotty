@@ -66,6 +66,12 @@
 // [bool] Permit clients to send command line arguments in URL (e.g. http://example.com:8080/?arg=AAA&arg=BBB)
 // permit_arguments = false
 
+// [bool] Enable cookies export to env as GOTTY_COOKIE_%NAME%
+// enable_cookies_export = false
+
+// [bool] Enable headers export to env as GOTTY_HEADER_%NAME%
+// enable_headers_export = false
+
 // [object] Client terminal (hterm) preferences
 // preferences {
 

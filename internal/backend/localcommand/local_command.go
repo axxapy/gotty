@@ -31,28 +31,26 @@ type LocalCommand struct {
 func New(command string, argv []string, options ...Option) (*LocalCommand, error) {
 	cmd := exec.Command(command, argv...)
 
-	pty, err := pty.Start(cmd)
-	if err != nil {
-		// todo close cmd?
-		return nil, errors.Wrapf(err, "failed to start command `%s`", command)
-	}
-	ptyClosed := make(chan struct{})
-
 	lcmd := &LocalCommand{
 		command: command,
 		argv:    argv,
+		cmd:     cmd,
 
 		closeSignal:  DefaultCloseSignal,
 		closeTimeout: DefaultCloseTimeout,
-
-		cmd:       cmd,
-		pty:       pty,
-		ptyClosed: ptyClosed,
 	}
 
 	for _, option := range options {
 		option(lcmd)
 	}
+
+	pty, err := pty.Start(cmd)
+	if err != nil {
+		// todo close cmd?
+		return nil, errors.Wrapf(err, "failed to start command `%s`", command)
+	}
+	lcmd.pty = pty
+	lcmd.ptyClosed = make(chan struct{})
 
 	// When the process is closed by the user,
 	// close pty so that Read() on the pty breaks with an EOF.

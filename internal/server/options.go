@@ -30,6 +30,8 @@ type Options struct {
 	Height              int              `hcl:"height" flagName:"height" flagDescribe:"Static height of the screen, 0(default) means dynamically resize" default:"0"`
 	WSOrigin            string           `hcl:"ws_origin" flagName:"ws-origin" flagDescribe:"A regular expression that matches origin URLs to be accepted by WebSocket. No cross origin requests are acceptable by default" default:""`
 	Term                string           `hcl:"term" flagName:"term" flagDescribe:"Terminal name to use on the browser, one of xterm or hterm." default:"xterm"`
+	EnableCookiesExport bool             `hcl:"enable_cookies_export" flagName:"enable-cookies-export" flagDescribe:"Enable cookies export to env as GOTTY_COOKIE_%NAME%" default:"false"`
+	EnableHeadersExport bool             `hcl:"enable_headers_export" flagName:"enable-headers-export" flagDescribe:"Enable headers export to env as GOTTY_HEADER_%NAME%" default:"false"`
 
 	TitleVariables map[string]interface{}
 }

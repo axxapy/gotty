@@ -61,6 +61,8 @@ By default, GoTTY starts a web server at port 8080. Open the URL on your web bro
 --height value                Static height of the screen, 0(default) means dynamically resize (default: 0) [$GOTTY_HEIGHT]
 --ws-origin value             A regular expression that matches origin URLs to be accepted by WebSocket. No cross origin requests are acceptable by default [$GOTTY_WS_ORIGIN]
 --term value                  Terminal name to use on the browser, one of xterm or hterm. (default: "xterm") [$GOTTY_TERM]
+--enable-cookies-export       Enable cookies export to env as GOTTY_COOKIE_%NAME% [$GOTTY_ENABLE_COOKIES_EXPORT]
+--enable-headers-export       Enable headers export to env as GOTTY_HEADER_%NAME% [$GOTTY_ENABLE_HEADERS_EXPORT]
 --close-signal value          Signal sent to the command process when gotty close it (default: SIGHUP) (default: 1) [$GOTTY_CLOSE_SIGNAL]
 --close-timeout value         Time in seconds to force kill process after client is disconnected (default: -1) (default: -1) [$GOTTY_CLOSE_TIMEOUT]
 --config value                Config file path (default: "~/.gotty") [$GOTTY_CONFIG]
