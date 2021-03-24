@@ -1,6 +1,6 @@
 .DEFAULT_GOAL=help
 
-BUILD_DIR = build
+BUILD_DIR = out
 GIT_COMMIT = `git rev-parse --short HEAD`
 VERSION = 1.1.0
 BUILD_OPTIONS = -ldflags "-X main.Version=$(VERSION) -X main.CommitID=$(GIT_COMMIT)"
@@ -8,7 +8,7 @@ BINARY = gotty
 GOENV = GOARM=5 CGO_ENABLED=0
 
 PLATFORMS=darwin linux freebsd netbsd openbsd
-ARCHITECTURES=386 amd64 arm
+ARCHITECTURES=386 amd64 arm arm64
 
 .PHONY: help
 help:  ## Show this help
@@ -22,12 +22,12 @@ assets: ## Build static assets
 	mkdir -p assets/static/css
 	cp js/node_modules/xterm/css/xterm.css assets/static/css/xterm.css
 
-.PHONY: build
-build: ## Build binary (assets must be built separately)
+.PHONY: binaries
+binaries: ## Builds binaries (assets must be built separately)
 	mkdir -p $(BUILD_DIR)
 	$(foreach GOOS, $(PLATFORMS),\
-	$(foreach GOARCH, $(ARCHITECTURES), $(shell export GOOS=$(GOOS); export GOARCH=$(GOARCH); $(GOENV) go build $(BUILD_OPTIONS) -o $(BUILD_DIR)/$(BINARY) cmd/gotty/*.go && gzip $(BUILD_DIR)/$(BINARY) && mv $(BUILD_DIR)/$(BINARY).gz $(BUILD_DIR)/$(BINARY)-$(GOOS)-$(GOARCH).gz)))
-	cd ${OUTPUT_DIR}/dist; sha256sum * > ./SHA256SUMS
+	$(foreach GOARCH, $(ARCHITECTURES), $(shell export GOOS=$(GOOS); export GOARCH=$(GOARCH); $(GOENV) go build $(BUILD_OPTIONS) -o $(BUILD_DIR)/$(BINARY) cmd/gotty/*.go && tar czf $(BUILD_DIR)/$(BINARY)-$(GOOS)-$(GOARCH).tgz .gotty --directory=$(BUILD_DIR) $(BINARY) && rm $(BUILD_DIR)/$(BINARY))))
+	cd ${BUILD_DIR} && sha256sum * > ./SHA256SUMS
 
 fmt: ## Run go fmt
 	if [ `go fmt ./... | wc -l` -gt 0 ]; then echo "go fmt error"; exit 1; fi
