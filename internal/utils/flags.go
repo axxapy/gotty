@@ -9,7 +9,7 @@ import (
 
 	"github.com/fatih/structs"
 	"github.com/hashicorp/hcl"
-	"github.com/urfave/cli"
+	"github.com/urfave/cli/v2"
 
 	"github.com/axxapy/gotty/internal/homedir"
 )
@@ -37,23 +37,23 @@ func GenerateFlags(options ...interface{}) (flags []cli.Flag, mappings map[strin
 			switch field.Kind() {
 			case reflect.String:
 				flags = append(flags, &cli.StringFlag{
-					Name:   flagName,
-					Value:  field.Value().(string),
-					Usage:  flagDescription,
-					EnvVar: envName,
+					Name:    flagName,
+					Value:   field.Value().(string),
+					Usage:   flagDescription,
+					EnvVars: []string{envName},
 				})
 			case reflect.Bool:
 				flags = append(flags, &cli.BoolFlag{
-					Name:   flagName,
-					Usage:  flagDescription,
-					EnvVar: envName,
+					Name:    flagName,
+					Usage:   flagDescription,
+					EnvVars: []string{envName},
 				})
 			case reflect.Int:
 				flags = append(flags, &cli.IntFlag{
-					Name:   flagName,
-					Value:  field.Value().(int),
-					Usage:  flagDescription,
-					EnvVar: envName,
+					Name:    flagName,
+					Value:   field.Value().(int),
+					Usage:   flagDescription,
+					EnvVars: []string{envName},
 				})
 			}
 		}

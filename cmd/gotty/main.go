@@ -9,7 +9,7 @@ import (
 	"strings"
 	"syscall"
 
-	"github.com/urfave/cli"
+	"github.com/urfave/cli/v2"
 
 	"github.com/axxapy/gotty/internal/backend/localcommand"
 	"github.com/axxapy/gotty/internal/homedir"
@@ -41,26 +41,25 @@ func main() {
 
 	app.Flags = append(
 		cliFlags,
-		cli.StringFlag{
-			Name:   "config",
-			Value:  "~/.gotty",
-			Usage:  "Config file path",
-			EnvVar: "GOTTY_CONFIG",
+		&cli.StringFlag{
+			Name:    "config",
+			Value:   "~/.gotty",
+			Usage:   "Config file path",
+			EnvVars: []string{"GOTTY_CONFIG"},
 		},
 	)
 
-	app.Action = func(c *cli.Context) {
-		if len(c.Args()) == 0 {
-			msg := "Error: No command given."
+	app.Action = func(c *cli.Context) error {
+		if c.NArg() == 0 {
 			cli.ShowAppHelp(c)
-			exit(fmt.Errorf(msg), 1)
+			return fmt.Errorf("Error: No command given.")
 		}
 
 		configFile := c.String("config")
 		_, err := os.Stat(homedir.Expand(configFile))
 		if configFile != "~/.gotty" || !os.IsNotExist(err) {
 			if err := utils.ApplyConfigFile(configFile, appOptions, backendOptions); err != nil {
-				exit(err, 2)
+				return fmt.Errorf("failed to apply config file: %w", err)
 			}
 		}
 
@@ -74,7 +73,7 @@ func main() {
 			exit(err, 6)
 		}
 
-		args := c.Args()
+		args := c.Args().Slice()
 		factory, err := localcommand.NewFactory(args[0], args[1:], backendOptions)
 		if err != nil {
 			exit(err, 3)
@@ -104,10 +103,10 @@ func main() {
 		err = waitSignals(errs, cancel, gCancel)
 
 		if err != nil && err != context.Canceled {
-			fmt.Printf("Error: %s\n", err)
-			exit(err, 8)
+			return fmt.Errorf("Error: %w", err)
 		}
 
+		return nil
 	}
 	app.Run(os.Args)
 }
