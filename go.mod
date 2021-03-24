@@ -11,7 +11,6 @@ require (
 	github.com/gorilla/websocket v1.4.2
 	github.com/hashicorp/hcl v1.0.0
 	github.com/kr/pty v1.1.8
-	github.com/pkg/errors v0.9.1
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/stretchr/testify v1.6.1 // indirect
 	github.com/urfave/cli v1.22.5

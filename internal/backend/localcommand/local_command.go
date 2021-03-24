@@ -1,6 +1,7 @@
 package localcommand
 
 import (
+	"fmt"
 	"os"
 	"os/exec"
 	"syscall"
@@ -8,7 +9,6 @@ import (
 	"unsafe"
 
 	"github.com/kr/pty"
-	"github.com/pkg/errors"
 )
 
 const (
@@ -47,7 +47,7 @@ func New(command string, argv []string, options ...Option) (*LocalCommand, error
 	pty, err := pty.Start(cmd)
 	if err != nil {
 		// todo close cmd?
-		return nil, errors.Wrapf(err, "failed to start command `%s`", command)
+		return nil, fmt.Errorf("failed to start command `%s`: %w", command, err)
 	}
 	lcmd.pty = pty
 	lcmd.ptyClosed = make(chan struct{})
