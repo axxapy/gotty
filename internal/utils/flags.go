@@ -8,8 +8,8 @@ import (
 	"strings"
 
 	"github.com/fatih/structs"
+	"github.com/hashicorp/hcl"
 	"github.com/urfave/cli"
-	"github.com/yudai/hcl"
 
 	"github.com/axxapy/gotty/internal/homedir"
 )
