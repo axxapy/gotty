@@ -8,7 +8,7 @@ import (
 	"time"
 	"unsafe"
 
-	"github.com/kr/pty"
+	"github.com/creack/pty"
 )
 
 const (
