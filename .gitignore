@@ -1,5 +1,5 @@
-/bindata
 /build
 /js/node_modules
+/js/dist
 /.idea
 /*.iml

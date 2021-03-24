@@ -14,24 +14,13 @@ ARCHITECTURES=386 amd64 arm
 help:  ## Show this help
 	@awk 'BEGIN {FS = ":.*?## "} /^[\/a-zA-Z_-]+:.*?## / {sub("\\\\n",sprintf("\n%22c"," "), $$2);printf "\033[36m%-25s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-.PHONY: tools
-tools:
-	GO111MODULE=off go get github.com/jteeuwen/go-bindata/...
-
 .PHONY: assets
-assets: tools ## Build static assets
+assets: ## Build static assets
 	cd js && yarn install
 	cd js && `yarn bin`/webpack
-	mkdir -p bindata/static/js
-	mkdir -p bindata/static/css
-	cp js/dist/gotty-bundle.js bindata/static/js/gotty-bundle.js
-	cp js/node_modules/xterm/css/xterm.css bindata/static/css/xterm.css
-	cp resources/index.html bindata/static/index.html
-	cp resources/favicon.png bindata/static/favicon.png
-	cp resources/index.css bindata/static/css/index.css
-	cp resources/xterm_customize.css bindata/static/css/xterm_customize.css
-	go-bindata -prefix bindata -pkg server -ignore=\\.gitkeep -o internal/server/asset.go bindata/...
-	gofmt -w internal/server/asset.go
+	mkdir -p assets/static/js
+	mkdir -p assets/static/css
+	cp js/node_modules/xterm/css/xterm.css assets/static/css/xterm.css
 
 .PHONY: build
 build: ## Build binary (assets must be built separately)
@@ -50,5 +39,5 @@ test: ## Run go tests
 clean: ## Clean projects from build artifacts
 	rm -rf \
 			js/node_modules \
-			bindata \
+			js/dist \
 			build

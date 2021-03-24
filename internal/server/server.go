@@ -16,9 +16,9 @@ import (
 	"time"
 
 	"github.com/NYTimes/gziphandler"
-	"github.com/elazarl/go-bindata-assetfs"
 	"github.com/gorilla/websocket"
 
+	"github.com/axxapy/gotty/assets"
 	"github.com/axxapy/gotty/internal/homedir"
 	"github.com/axxapy/gotty/internal/randomstring"
 	"github.com/axxapy/gotty/internal/webtty"
@@ -37,7 +37,7 @@ type Server struct {
 // New creates a new instance of Server.
 // Server will use the New() of the factory provided to handle each request.
 func New(factory Factory, options *Options) (*Server, error) {
-	indexData, err := Asset("static/index.html")
+	indexData, err := assets.FS.ReadFile("static/index.html")
 	if err != nil {
 		panic("index not found") // must be in bindata
 	}
@@ -182,9 +182,13 @@ func (server *Server) Run(ctx context.Context, options ...RunOption) error {
 }
 
 func (server *Server) setupHandlers(ctx context.Context, cancel context.CancelFunc, pathPrefix string, counter *counter) http.Handler {
-	staticFileHandler := http.FileServer(
-		&assetfs.AssetFS{Asset: Asset, AssetDir: AssetDir, Prefix: "static"},
-	)
+	staticFileHandler := func() http.Handler {
+		h := http.FileServer(http.FS(assets.FS))
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			r.URL.Path = "static/"+r.URL.Path
+			h.ServeHTTP(w, r)
+		})
+	}()
 
 	var siteMux = http.NewServeMux()
 	siteMux.HandleFunc(pathPrefix, server.handleIndex)

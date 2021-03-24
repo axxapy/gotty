@@ -6,7 +6,6 @@ require (
 	github.com/NYTimes/gziphandler v1.1.1
 	github.com/cpuguy83/go-md2man/v2 v2.0.0 // indirect
 	github.com/creack/pty v1.1.11 // indirect
-	github.com/elazarl/go-bindata-assetfs v1.0.1
 	github.com/fatih/structs v1.1.0
 	github.com/gorilla/websocket v1.4.2
 	github.com/hashicorp/hcl v1.0.0

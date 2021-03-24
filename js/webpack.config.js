@@ -4,7 +4,7 @@ module.exports = {
     mode: "production",
     entry: "./src/main.ts",
     output: {
-        filename: "./gotty-bundle.js"
+        filename: "../../assets/static/js/gotty-bundle.js"
     },
     devtool: "source-map",
     resolve: {
