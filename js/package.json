@@ -7,7 +7,6 @@
         "typecheck": "tsc --noEmit"
     },
     "dependencies": {
-        "libapps": "github:yudai/libapps#18b92f2a837b4da8650f10153e94720edd4399bd",
         "@xterm/xterm": "^5.5.0",
         "@xterm/addon-fit": "^0.10.0"
     },

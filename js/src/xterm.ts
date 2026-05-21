@@ -1,12 +1,10 @@
 import { Terminal } from "@xterm/xterm";
 import { FitAddon } from "@xterm/addon-fit";
-import { lib } from "libapps"
 
 export class Xterm {
     elem: HTMLElement;
     term: Terminal;
     resizeListener: () => void;
-    decoder: lib.UTF8Decoder;
 
     message: HTMLElement;
     messageTimeout: number;
@@ -33,16 +31,14 @@ export class Xterm {
 
         this.term.open(elem);
         fit.fit();
-
-        this.decoder = new lib.UTF8Decoder()
     };
 
     info(): { columns: number, rows: number } {
         return { columns: this.term.cols, rows: this.term.rows };
     };
 
-    output(data: string) {
-        this.term.write(this.decoder.decode(data));
+    output(data: Uint8Array) {
+        this.term.write(data);
     };
 
     showMessage(message: string, timeout: number) {
@@ -67,9 +63,6 @@ export class Xterm {
 
     setWindowTitle(title: string) {
         document.title = title;
-    };
-
-    setPreferences(value: object) {
     };
 
     onInput(callback: (input: string) => void) {

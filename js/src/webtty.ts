@@ -9,17 +9,15 @@ export const msgUnknownOutput = '0';
 export const msgOutput = '1';
 export const msgPong = '2';
 export const msgSetWindowTitle = '3';
-export const msgSetPreferences = '4';
 export const msgSetReconnect = '5';
 
 
 export interface Terminal {
     info(): { columns: number, rows: number };
-    output(data: string): void;
+    output(data: Uint8Array): void;
     showMessage(message: string, timeout: number): void;
     removeMessage(): void;
     setWindowTitle(title: string): void;
-    setPreferences(value: object): void;
     onInput(callback: (input: string) => void): void;
     onResize(callback: (columns: number, rows: number) => void): void;
     reset(): void;
@@ -104,16 +102,12 @@ export class WebTTY {
                 const payload = data.slice(1);
                 switch (data[0]) {
                     case msgOutput:
-                        this.term.output(atob(payload));
+                        this.term.output(Uint8Array.from(atob(payload), c => c.charCodeAt(0)));
                         break;
                     case msgPong:
                         break;
                     case msgSetWindowTitle:
                         this.term.setWindowTitle(payload);
-                        break;
-                    case msgSetPreferences:
-                        const preferences = JSON.parse(payload);
-                        this.term.setPreferences(preferences);
                         break;
                     case msgSetReconnect:
                         this.reconnect = JSON.parse(payload);

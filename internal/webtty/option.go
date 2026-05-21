@@ -1,10 +1,5 @@
 package webtty
 
-import (
-	"encoding/json"
-	"fmt"
-)
-
 // Option is an option for WebTTY.
 type Option func(*WebTTY) error
 
@@ -44,18 +39,6 @@ func WithWindowTitle(windowTitle []byte) Option {
 func WithReconnect(timeInSeconds int) Option {
 	return func(wt *WebTTY) error {
 		wt.reconnect = timeInSeconds
-		return nil
-	}
-}
-
-// WithMasterPreferences sets an optional configuration of master.
-func WithMasterPreferences(preferences interface{}) Option {
-	return func(wt *WebTTY) error {
-		prefs, err := json.Marshal(preferences)
-		if err != nil {
-			return fmt.Errorf("failed to marshal preferences as JSON: %w", err)
-		}
-		wt.masterPrefs = prefs
 		return nil
 	}
 }
