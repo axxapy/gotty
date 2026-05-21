@@ -21,6 +21,11 @@ assets: ## Build static assets
 	mkdir -p assets/static/js assets/static/css
 	cp js/node_modules/@xterm/xterm/css/xterm.css assets/static/css/xterm.css
 
+.PHONY: build
+build: ## Build a local binary at $(BUILD_DIR)/$(BINARY)
+	@mkdir -p $(BUILD_DIR)
+	CGO_ENABLED=0 go build $(BUILD_OPTIONS) -o $(BUILD_DIR)/$(BINARY) ./cmd/gotty
+
 .PHONY: binaries
 binaries: ## Builds binaries for $(TARGETS) (assets must be built separately)
 	@mkdir -p $(BUILD_DIR)
