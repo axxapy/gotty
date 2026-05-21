@@ -9,7 +9,7 @@ Reporting a bug is always welcome and one of the best ways to contribute. A good
 
 ## Requesting a new feature
 
-When you find that GoTTY cannot fullfill your requirements because of lack of ability, you may want to open a new feature request. In that case, please file a new issue with your usecase and requirements.
+When you find that GoTTY cannot fulfill your requirements because of lack of ability, you may want to open a new feature request. In that case, please file a new issue with your use case and requirements.
 
 
 ## Opening a pull request
