@@ -19,8 +19,8 @@ import (
 	"github.com/gorilla/websocket"
 
 	"github.com/axxapy/gotty/assets"
-	"github.com/axxapy/gotty/internal/homedir"
 	"github.com/axxapy/gotty/internal/randomstring"
+	"github.com/axxapy/gotty/internal/utils"
 	"github.com/axxapy/gotty/internal/webtty"
 )
 
@@ -42,7 +42,7 @@ func New(factory Factory, options *Options) (*Server, error) {
 		panic("index not found") // must be in bindata
 	}
 	if options.IndexFile != "" {
-		path := homedir.Expand(options.IndexFile)
+		path := utils.ExpandHome(options.IndexFile)
 		indexData, err = os.ReadFile(path)
 		if err != nil {
 			return nil, fmt.Errorf("failed to read custom index file at `%s`: %w", path, err)
@@ -138,8 +138,8 @@ func (server *Server) Run(ctx context.Context, options ...RunOption) error {
 	srvErr := make(chan error, 1)
 	go func() {
 		if server.options.EnableTLS {
-			crtFile := homedir.Expand(server.options.TLSCrtFile)
-			keyFile := homedir.Expand(server.options.TLSKeyFile)
+			crtFile := utils.ExpandHome(server.options.TLSCrtFile)
+			keyFile := utils.ExpandHome(server.options.TLSKeyFile)
 			log.Printf("TLS crt file: %s", crtFile)
 			log.Printf("TLS key file: %s", keyFile)
 
@@ -234,7 +234,7 @@ func (server *Server) setupHTTPServer(handler http.Handler) (*http.Server, error
 }
 
 func (server *Server) tlsConfig() (*tls.Config, error) {
-	caFile := homedir.Expand(server.options.TLSCACrtFile)
+	caFile := utils.ExpandHome(server.options.TLSCACrtFile)
 	caCert, err := os.ReadFile(caFile)
 	if err != nil {
 		return nil, errors.New("could not open CA crt file " + caFile)
