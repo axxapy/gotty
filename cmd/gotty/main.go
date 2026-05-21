@@ -12,7 +12,6 @@ import (
 	"github.com/urfave/cli/v2"
 
 	"github.com/axxapy/gotty/internal/backend/localcommand"
-	"github.com/axxapy/gotty/internal/homedir"
 	"github.com/axxapy/gotty/internal/server"
 	"github.com/axxapy/gotty/internal/utils"
 )
@@ -56,7 +55,7 @@ func main() {
 		}
 
 		configFile := c.String("config")
-		_, err := os.Stat(homedir.Expand(configFile))
+		_, err := os.Stat(utils.ExpandHome(configFile))
 		if configFile != "~/.gotty" || !os.IsNotExist(err) {
 			if err := utils.ApplyConfigFile(configFile, appOptions, backendOptions); err != nil {
 				return fmt.Errorf("failed to apply config file: %w", err)

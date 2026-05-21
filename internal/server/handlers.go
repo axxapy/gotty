@@ -154,9 +154,6 @@ func (server *Server) processWSConn(ctx context.Context, conn *websocket.Conn, e
 	if server.options.Height > 0 {
 		opts = append(opts, webtty.WithFixedRows(server.options.Height))
 	}
-	if server.options.Preferences != nil {
-		opts = append(opts, webtty.WithMasterPreferences(server.options.Preferences))
-	}
 
 	tty, err := webtty.New(&wsWrapper{conn}, slave, opts...)
 	if err != nil {
@@ -204,11 +201,6 @@ func (server *Server) handleAuthToken(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/javascript")
 	// @TODO hashing?
 	w.Write([]byte("var gotty_auth_token = '" + server.options.Credential + "';"))
-}
-
-func (server *Server) handleConfig(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/javascript")
-	w.Write([]byte("var gotty_term = '" + server.options.Term + "';"))
 }
 
 // titleVariables merges maps in a specified order.

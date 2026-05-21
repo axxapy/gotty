@@ -7,10 +7,10 @@ import (
 	"errors"
 	"fmt"
 	"html/template"
-	"io/ioutil"
 	"log"
 	"net"
 	"net/http"
+	"os"
 	"regexp"
 	noesctmpl "text/template"
 	"time"
@@ -19,8 +19,8 @@ import (
 	"github.com/gorilla/websocket"
 
 	"github.com/axxapy/gotty/assets"
-	"github.com/axxapy/gotty/internal/homedir"
 	"github.com/axxapy/gotty/internal/randomstring"
+	"github.com/axxapy/gotty/internal/utils"
 	"github.com/axxapy/gotty/internal/webtty"
 )
 
@@ -42,8 +42,8 @@ func New(factory Factory, options *Options) (*Server, error) {
 		panic("index not found") // must be in bindata
 	}
 	if options.IndexFile != "" {
-		path := homedir.Expand(options.IndexFile)
-		indexData, err = ioutil.ReadFile(path)
+		path := utils.ExpandHome(options.IndexFile)
+		indexData, err = os.ReadFile(path)
 		if err != nil {
 			return nil, fmt.Errorf("failed to read custom index file at `%s`: %w", path, err)
 		}
@@ -138,10 +138,10 @@ func (server *Server) Run(ctx context.Context, options ...RunOption) error {
 	srvErr := make(chan error, 1)
 	go func() {
 		if server.options.EnableTLS {
-			crtFile := homedir.Expand(server.options.TLSCrtFile)
-			keyFile := homedir.Expand(server.options.TLSKeyFile)
-			log.Printf("TLS crt file: " + crtFile)
-			log.Printf("TLS key file: " + keyFile)
+			crtFile := utils.ExpandHome(server.options.TLSCrtFile)
+			keyFile := utils.ExpandHome(server.options.TLSKeyFile)
+			log.Printf("TLS crt file: %s", crtFile)
+			log.Printf("TLS key file: %s", keyFile)
 
 			err = srv.ServeTLS(listener, crtFile, keyFile)
 		} else {
@@ -185,7 +185,7 @@ func (server *Server) setupHandlers(ctx context.Context, cancel context.CancelFu
 	staticFileHandler := func() http.Handler {
 		h := http.FileServer(http.FS(assets.FS))
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			r.URL.Path = "static/"+r.URL.Path
+			r.URL.Path = "static/" + r.URL.Path
 			h.ServeHTTP(w, r)
 		})
 	}()
@@ -197,7 +197,6 @@ func (server *Server) setupHandlers(ctx context.Context, cancel context.CancelFu
 	siteMux.Handle(pathPrefix+"css/", http.StripPrefix(pathPrefix, staticFileHandler))
 
 	siteMux.HandleFunc(pathPrefix+"auth_token.js", server.handleAuthToken)
-	siteMux.HandleFunc(pathPrefix+"config.js", server.handleConfig)
 
 	siteHandler := http.Handler(siteMux)
 
@@ -234,8 +233,8 @@ func (server *Server) setupHTTPServer(handler http.Handler) (*http.Server, error
 }
 
 func (server *Server) tlsConfig() (*tls.Config, error) {
-	caFile := homedir.Expand(server.options.TLSCACrtFile)
-	caCert, err := ioutil.ReadFile(caFile)
+	caFile := utils.ExpandHome(server.options.TLSCACrtFile)
+	caCert, err := os.ReadFile(caFile)
 	if err != nil {
 		return nil, errors.New("could not open CA crt file " + caFile)
 	}

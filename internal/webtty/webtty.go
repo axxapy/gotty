@@ -23,7 +23,6 @@ type WebTTY struct {
 	columns     int
 	rows        int
 	reconnect   int // in seconds
-	masterPrefs []byte
 
 	bufferSize int
 	writeMutex sync.Mutex
@@ -120,13 +119,6 @@ func (wt *WebTTY) sendInitializeMessage() error {
 		err := wt.masterWrite(append([]byte{SetReconnect}, reconnect...))
 		if err != nil {
 			return fmt.Errorf("failed to set reconnect: %w", err)
-		}
-	}
-
-	if wt.masterPrefs != nil {
-		err := wt.masterWrite(append([]byte{SetPreferences}, wt.masterPrefs...))
-		if err != nil {
-			return fmt.Errorf("failed to set preferences: %w", err)
 		}
 	}
 

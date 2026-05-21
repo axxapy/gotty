@@ -1,11 +1,9 @@
 # ![](https://raw.githubusercontent.com/axxapy/gotty/master/resources/favicon.png) GoTTY - Share your terminal as a web application
 
-[![GitHub release](http://img.shields.io/github/release/axxapy/gotty.svg?style=flat-square)][release]
-[![Wercker](http://img.shields.io/wercker/ci/55d0eeff7331453f0801982c.svg?style=flat-square)][wercker]
-[![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)][license]
+[![GitHub release](https://img.shields.io/github/release/axxapy/gotty.svg?style=flat-square)][release]
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)][license]
 
 [release]: https://github.com/axxapy/gotty/releases
-[wercker]: https://app.wercker.com/project/bykey/03b91f441bebeda34f80e09a9f14126f
 [license]: https://github.com/axxapy/gotty/blob/master/LICENSE
 
 GoTTY is a simple command line tool that turns your CLI tools into web applications.
@@ -14,7 +12,7 @@ GoTTY is a simple command line tool that turns your CLI tools into web applicati
 
 # Installation
 
-Download the latest stable binary file from the [Releases](https://github.com/axxapy/gotty/releases) page. Note that the release marked `Pre-release` is built for testing purpose, which can include unstable or breaking changes. Download a release marked [Latest release](https://github.com/yudai/gotty/releases/latest) for a stabale build.
+Download the latest stable binary file from the [Releases](https://github.com/axxapy/gotty/releases) page. Note that the release marked `Pre-release` is built for testing purposes and can include unstable or breaking changes. Download a release marked [Latest release](https://github.com/axxapy/gotty/releases/latest) for a stable build.
 
 (Files named with `darwin_amd64` are for Mac OS X users)
 

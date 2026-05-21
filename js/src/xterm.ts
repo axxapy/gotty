@@ -1,16 +1,21 @@
-import { Terminal } from "xterm";
-import { FitAddon } from "xterm-addon-fit";
-import { lib } from "libapps"
+import { Terminal, IDisposable } from "@xterm/xterm";
+import { FitAddon } from "@xterm/addon-fit";
 
 export class Xterm {
     elem: HTMLElement;
     term: Terminal;
     resizeListener: () => void;
-    decoder: lib.UTF8Decoder;
 
     message: HTMLElement;
     messageTimeout: number;
-    messageTimer: number;
+    messageTimer: number = 0;
+
+    // Disposables for the input/resize listeners that WebTTY registers
+    // (one of each at a time). Tracked so reconnects don't accumulate
+    // duplicate subscribers, which would cause keystrokes to be sent
+    // N times after N reconnects.
+    private inputDisposable?: IDisposable;
+    private remoteResizeDisposable?: IDisposable;
 
     constructor(elem: HTMLElement) {
         this.elem = elem;
@@ -33,16 +38,14 @@ export class Xterm {
 
         this.term.open(elem);
         fit.fit();
-
-        this.decoder = new lib.UTF8Decoder()
     };
 
     info(): { columns: number, rows: number } {
         return { columns: this.term.cols, rows: this.term.rows };
     };
 
-    output(data: string) {
-        this.term.write(this.decoder.decode(data));
+    output(data: Uint8Array) {
+        this.term.write(data);
     };
 
     showMessage(message: string, timeout: number) {
@@ -69,24 +72,25 @@ export class Xterm {
         document.title = title;
     };
 
-    setPreferences(value: object) {
-    };
-
     onInput(callback: (input: string) => void) {
-        this.term.onData((data) => {
+        this.inputDisposable?.dispose();
+        this.inputDisposable = this.term.onData((data) => {
             callback(data);
         });
     };
 
-    onResize(callback: (colmuns: number, rows: number) => void) {
-        this.term.onResize((data) => {
+    onResize(callback: (columns: number, rows: number) => void) {
+        this.remoteResizeDisposable?.dispose();
+        this.remoteResizeDisposable = this.term.onResize((data) => {
             callback(data.cols, data.rows);
         });
     };
 
     deactivate(): void {
-        //this.term.off("data");
-        //this.term.off("resize");
+        this.inputDisposable?.dispose();
+        this.inputDisposable = undefined;
+        this.remoteResizeDisposable?.dispose();
+        this.remoteResizeDisposable = undefined;
         this.term.blur();
     }
 
@@ -97,6 +101,8 @@ export class Xterm {
 
     close(): void {
         window.removeEventListener("resize", this.resizeListener);
+        this.inputDisposable?.dispose();
+        this.remoteResizeDisposable?.dispose();
         this.term.dispose();
     }
 }

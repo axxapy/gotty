@@ -7,32 +7,28 @@ jobs:
     name: Check
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-go@v2
-        with:
-          go-version: ^1.16
-        id: go
+      - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-go@v5
         with:
-          node-version: '15.x'
+          go-version-file: go.mod
 
-      - uses: actions/checkout@v2
-
-      - uses: actions/cache@v2
+      - uses: oven-sh/setup-bun@v2
         with:
-          path: ~/go/pkg/mod
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-
+          bun-version: latest
 
       - name: Run tests
         env:
           GOPROXY: "https://proxy.golang.org"
-        run: |
-          echo Tests are disabled for now
-          go build cmd/gotty/*.go
+        run: go test ./...
 
       - run: make fmt
+
+      - name: TypeScript typecheck
+        working-directory: js
+        run: |
+          bun install --frozen-lockfile
+          bun run typecheck
 
       - run: make assets
 
