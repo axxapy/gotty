@@ -140,8 +140,8 @@ func (server *Server) Run(ctx context.Context, options ...RunOption) error {
 		if server.options.EnableTLS {
 			crtFile := homedir.Expand(server.options.TLSCrtFile)
 			keyFile := homedir.Expand(server.options.TLSKeyFile)
-			log.Printf("TLS crt file: " + crtFile)
-			log.Printf("TLS key file: " + keyFile)
+			log.Printf("TLS crt file: %s", crtFile)
+			log.Printf("TLS key file: %s", keyFile)
 
 			err = srv.ServeTLS(listener, crtFile, keyFile)
 		} else {
@@ -185,7 +185,7 @@ func (server *Server) setupHandlers(ctx context.Context, cancel context.CancelFu
 	staticFileHandler := func() http.Handler {
 		h := http.FileServer(http.FS(assets.FS))
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			r.URL.Path = "static/"+r.URL.Path
+			r.URL.Path = "static/" + r.URL.Path
 			h.ServeHTTP(w, r)
 		})
 	}()
