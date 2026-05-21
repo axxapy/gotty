@@ -7,8 +7,8 @@ import (
 	"strings"
 
 	"github.com/fatih/structs"
-	"github.com/hashicorp/hcl"
 	"github.com/urfave/cli/v2"
+	"gopkg.in/yaml.v3"
 )
 
 func GenerateFlags(options ...interface{}) (flags []cli.Flag, mappings map[string]string, err error) {
@@ -104,7 +104,6 @@ func ApplyConfigFile(filePath string, options ...interface{}) error {
 		return err
 	}
 
-	fileString := []byte{}
 	log.Printf("Loading config file at: %s", filePath)
 	fileString, err := os.ReadFile(filePath)
 	if err != nil {
@@ -112,7 +111,7 @@ func ApplyConfigFile(filePath string, options ...interface{}) error {
 	}
 
 	for _, object := range options {
-		if err := hcl.Decode(object, string(fileString)); err != nil {
+		if err := yaml.Unmarshal(fileString, object); err != nil {
 			return err
 		}
 	}

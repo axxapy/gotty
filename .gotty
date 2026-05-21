@@ -1,74 +1,69 @@
-// [string] Address to listen, all addresses will be used when empty
-// address = ""
+# gotty config file. YAML. All keys are optional and shown with their
+# defaults; uncomment to override.
 
-// [string] Port to listen
-// port = "8080"
+# IP address to listen on (default: 0.0.0.0)
+# address: "0.0.0.0"
 
-// [bool] Permit clients to write to the TTY
-// permit_write = false
+# Port to listen on (default: "8080")
+# port: "8080"
 
-// [bool] Enable basic authentication
-// enable_basic_auth = false
+# Permit clients to write to the TTY. BE CAREFUL.
+# permit_write: false
 
-// [string] Default username and password of basic authentication (user:pass)
-//          To enable basic authentication, set `true` to `enable_basic_auth`
-// credential = "user:pass"
+# Basic-Auth credential in "user:pass" form. Empty means disabled.
+# credential: ""
 
-// [bool] Enable random URL generation
-// enable_random_url = false
+# Append a random string to the URL path to make it unguessable.
+# enable_random_url: false
+# random_url_length: 8
 
-// [int] Default length of random strings appended to URL
-//       To enable random URL generation, set `true` to `enable_random_url`
-// random_url_length = 8
+# TLS/SSL
+# enable_tls: false
+# tls_crt_file: "~/.gotty.crt"
+# tls_key_file: "~/.gotty.key"
+# enable_tls_client_auth: false
+# tls_ca_crt_file: "~/.gotty.ca.crt"
 
-// [bool] Enable TLS/SSL
-// enable_tls = false
+# Custom index.html file
+# index_file: ""
 
-// [string] Default TLS certificate file path
-// tls_crt_file = "~/.gotty.crt"
+# Title format of the browser window. Variables: command, hostname,
+# remote_addr, pid, time.
+# title_format: "{{ .command }}@{{ .hostname }}"
 
-// [string] Default TLS key file path
-// tls_key_file = "~/.gotty.key"
+# Reconnect on lost connection
+# enable_reconnect: false
+# reconnect_time: 10
 
-// [bool] Enable client certificate authentication
-// enable_tls_client_auth = false
+# Max concurrent connections (0 = unlimited)
+# max_connection: 0
 
-// [string] Certificate file of CA for client certificates
-// tls_ca_crt_file = "~/.gotty.ca.crt"
+# Accept only one client and exit on disconnect
+# once: false
 
-// [string] Custom index.html file
-// index_file = ""
+# Seconds to wait for a client before exiting (0 = disable)
+# timeout: 0
 
-// [string] Title format of browser window
-//          Available variables are:
-//            Command    Command string
-//            Pid        PID of the process for the client
-//            Hostname   Server hostname
-//            RemoteAddr Client IP address
-// title_format = "GoTTY - {{ .Command }} ({{ .Hostname }})"
+# Permit clients to send command-line arguments via URL
+# (e.g. http://example.com:8080/?arg=AAA&arg=BBB)
+# permit_arguments: true
 
-// [bool] Enable client side reconnection when connection closed
-// enable_reconnect = false
+# Static terminal size (0 = dynamic)
+# width: 0
+# height: 0
 
-// [int] Interval time to try reconnection (seconds)
-//       To enable reconnection, set `true` to `enable_reconnect`
-// reconnect_time = 10
+# Regexp matching origin URLs accepted by the WebSocket upgrader.
+# Empty means same-origin only.
+# ws_origin: ""
 
-// [int] Timeout seconds for waiting a client (0 to disable)
-// timeout = 60
+# Export cookies / headers from the upgrade request into the child
+# process environment as GOTTY_COOKIE_<NAME> / GOTTY_HEADER_<NAME>.
+# enable_cookies_export: false
+# enable_headers_export: false
 
-// [int] Maximum connection to gotty, 0(default) means no limit.
-// max_connection = 0
+# Signal sent to the child process when gotty closes it (default: SIGHUP = 1).
+# close_signal: 1
 
-// [bool] Accept only one client and exit gotty once the client exits
-// once = false
-
-// [bool] Permit clients to send command line arguments in URL (e.g. http://example.com:8080/?arg=AAA&arg=BBB)
-// permit_arguments = false
-
-// [bool] Enable cookies export to env as GOTTY_COOKIE_%NAME%
-// enable_cookies_export = false
-
-// [bool] Enable headers export to env as GOTTY_HEADER_%NAME%
-// enable_headers_export = false
-
+# Seconds to wait before force-killing the child after the client disconnects
+# (-1 = wait indefinitely).
+# close_timeout: -1
