@@ -1,0 +1,26 @@
+{
+  "lockfileVersion": 1,
+  "configVersion": 1,
+  "workspaces": {
+    "": {
+      "name": "gotty-js",
+      "dependencies": {
+        "libapps": "github:yudai/libapps#release-hterm-1.75",
+        "xterm": "^4.11.0",
+        "xterm-addon-fit": "^0.5.0",
+      },
+      "devDependencies": {
+        "typescript": "^4.2.3",
+      },
+    },
+  },
+  "packages": {
+    "libapps": ["libapps@github:yudai/libapps#18b92f2", {}, "yudai-libapps-18b92f2"],
+
+    "typescript": ["typescript@4.9.5", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g=="],
+
+    "xterm": ["xterm@4.19.0", "", {}, "sha512-c3Cp4eOVsYY5Q839dR5IejghRPpxciGmLWWaP9g+ppfMeBChMeLa1DCA+pmX/jyDZ+zxFOmlJL/82qVdayVoGQ=="],
+
+    "xterm-addon-fit": ["xterm-addon-fit@0.5.0", "", { "peerDependencies": { "xterm": "^4.0.0" } }, "sha512-DsS9fqhXHacEmsPxBJZvfj2la30Iz9xk+UKjhQgnYNkrUIN5CYLbw7WEfz117c7+S86S/tpHPfvNxJsF5/G8wQ=="],
+  }
+}

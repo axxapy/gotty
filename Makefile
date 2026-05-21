@@ -16,10 +16,9 @@ help:  ## Show this help
 
 .PHONY: assets
 assets: ## Build static assets
-	cd js && yarn install
-	cd js && `yarn bin`/webpack
-	mkdir -p assets/static/js
-	mkdir -p assets/static/css
+	cd js && bun install --frozen-lockfile
+	cd js && bun run build
+	mkdir -p assets/static/js assets/static/css
 	cp js/node_modules/xterm/css/xterm.css assets/static/css/xterm.css
 
 .PHONY: binaries
