@@ -2,7 +2,7 @@
 
 BUILD_DIR     = out
 GIT_COMMIT    = `git rev-parse --short HEAD`
-VERSION       = 1.1.0
+VERSION       = 2.0.0
 BUILD_OPTIONS = -ldflags "-X main.Version=$(VERSION) -X main.CommitID=$(GIT_COMMIT)"
 BINARY        = gotty
 
