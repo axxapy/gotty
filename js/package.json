@@ -3,7 +3,7 @@
     "private": true,
     "license": "MIT",
     "scripts": {
-        "build": "bun build src/main.ts --outfile=../assets/static/js/gotty-bundle.js --minify --target=browser",
+        "build": "bun build src/main.ts --outdir=../assets/static/js --entry-naming=gotty-bundle.[ext] --minify --sourcemap --target=browser",
         "typecheck": "tsc --noEmit"
     },
     "dependencies": {
