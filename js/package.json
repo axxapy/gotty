@@ -3,13 +3,13 @@
     "private": true,
     "license": "MIT",
     "scripts": {
-        "build": "bun build src/main.ts --outfile=../assets/static/js/gotty-bundle.js --minify --sourcemap --target=browser",
+        "build": "bun build src/main.ts --outfile=../assets/static/js/gotty-bundle.js --minify --target=browser",
         "typecheck": "tsc --noEmit"
     },
     "dependencies": {
         "libapps": "github:yudai/libapps#release-hterm-1.75",
-        "xterm": "^4.11.0",
-        "xterm-addon-fit": "^0.5.0"
+        "@xterm/xterm": "^5.5.0",
+        "@xterm/addon-fit": "^0.10.0"
     },
     "devDependencies": {
         "typescript": "^4.2.3"

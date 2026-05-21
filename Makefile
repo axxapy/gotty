@@ -19,7 +19,7 @@ assets: ## Build static assets
 	cd js && bun install --frozen-lockfile
 	cd js && bun run build
 	mkdir -p assets/static/js assets/static/css
-	cp js/node_modules/xterm/css/xterm.css assets/static/css/xterm.css
+	cp js/node_modules/@xterm/xterm/css/xterm.css assets/static/css/xterm.css
 
 .PHONY: binaries
 binaries: ## Builds binaries (assets must be built separately)
