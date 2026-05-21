@@ -10,12 +10,7 @@ declare var gotty_term: string;
 const elem = document.getElementById("terminal")
 
 if (elem !== null) {
-    var term: Terminal;
-    if (gotty_term == "hterm") {
-        term = new Hterm(elem);
-    } else {
-        term = new Xterm(elem);
-    }
+    const term: Terminal = gotty_term == "hterm" ? new Hterm(elem) : new Xterm(elem);
     const httpsEnabled = window.location.protocol == "https:";
     const url = (httpsEnabled ? 'wss://' : 'ws://') + window.location.host + window.location.pathname + 'ws';
     const args = window.location.search;

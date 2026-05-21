@@ -10,7 +10,7 @@
         "libapps": "github:yudai/libapps#18b92f2a837b4da8650f10153e94720edd4399bd",
       },
       "devDependencies": {
-        "typescript": "^4.2.3",
+        "typescript": "^5.6.0",
       },
     },
   },
@@ -21,6 +21,6 @@
 
     "libapps": ["libapps@github:yudai/libapps#18b92f2", {}, "yudai-libapps-18b92f2"],
 
-    "typescript": ["typescript@4.9.5", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g=="],
+    "typescript": ["typescript@5.9.3", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw=="],
   }
 }

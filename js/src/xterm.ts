@@ -10,7 +10,7 @@ export class Xterm {
 
     message: HTMLElement;
     messageTimeout: number;
-    messageTimer: number;
+    messageTimer: number = 0;
 
     constructor(elem: HTMLElement) {
         this.elem = elem;
@@ -78,7 +78,7 @@ export class Xterm {
         });
     };
 
-    onResize(callback: (colmuns: number, rows: number) => void) {
+    onResize(callback: (columns: number, rows: number) => void) {
         this.term.onResize((data) => {
             callback(data.cols, data.rows);
         });

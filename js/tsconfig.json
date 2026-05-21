@@ -1,20 +1,20 @@
 {
   "compilerOptions": {
-      "strictNullChecks": true,
-      "noUnusedLocals" : true,
-      "noImplicitThis": true,
-      "alwaysStrict": true,
-      "outDir": "./dist/",
-      "declaration": true,
-      "sourceMap": true,
-      "target": "es5",
-      "module": "commonJS",
-      "baseUrl": ".",
-      "paths": {
-          "*": ["./typings/*"]
-      }
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "lib": ["esnext", "dom"],
+    "strict": true,
+    "noUnusedLocals": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "*": ["./typings/*"]
+    }
   },
-    "exclude": [
-      "node_modules"
-    ]
+  "exclude": ["node_modules"]
 }

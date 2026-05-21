@@ -6,11 +6,11 @@ export class Hterm {
     term: bare.hterm.Terminal;
     io: bare.hterm.IO;
 
-    columns: number;
-    rows: number;
+    columns: number = 0;
+    rows: number = 0;
 
     // to "show" the current message when removeMessage() is called
-    message: string;
+    message: string = "";
 
     constructor(elem: HTMLElement) {
         this.elem = elem;
@@ -51,7 +51,7 @@ export class Hterm {
         this.term.setWindowTitle(title);
     };
 
-    setPreferences(value: object) {
+    setPreferences(value: Record<string, string>) {
         Object.keys(value).forEach((key) => {
             this.term.getPrefs().set(key, value[key]);
         });
@@ -66,7 +66,7 @@ export class Hterm {
         };
     };
 
-    onResize(callback: (colmuns: number, rows: number) => void) {
+    onResize(callback: (columns: number, rows: number) => void) {
         this.io.onTerminalResize = (columns: number, rows: number) => {
             this.columns = columns;
             this.rows = rows;

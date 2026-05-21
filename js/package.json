@@ -12,6 +12,6 @@
         "@xterm/addon-fit": "^0.10.0"
     },
     "devDependencies": {
-        "typescript": "^4.2.3"
+        "typescript": "^5.6.0"
     }
 }

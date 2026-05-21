@@ -24,6 +24,12 @@ jobs:
 
       - run: make fmt
 
+      - name: TypeScript typecheck
+        working-directory: js
+        run: |
+          bun install --frozen-lockfile
+          bun run typecheck
+
       - run: make assets
 
       - run: make build
